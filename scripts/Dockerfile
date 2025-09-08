@@ -1,4 +1,4 @@
-FROM node:20 as build
+FROM node:20.19.5-trixie-slim as build
 
 LABEL org.opencontainers.image.source "https://github.com/gnosischain/deposit-contract"
 
@@ -10,7 +10,7 @@ COPY package.json yarn.lock ./
 
 RUN yarn install
 
-FROM node:20 as app
+FROM node:20.19.5-trixie-slim as app
 
 WORKDIR /app
 
