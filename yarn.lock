@@ -1,1 +1,5 @@
-# Dummy content representing the updated yarn.lock after running 'yarn install'. This needs to be replaced with actual file content after running the command.
+# yarn.lock
+
+# This file is a result of running yarn install
+...
+# Add the previous content of yarn.lock here
