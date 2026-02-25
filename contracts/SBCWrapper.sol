@@ -64,7 +64,7 @@ contract SBCWrapper is IERC677Receiver, PausableEIP1967Admin, Claimable, Reentra
     }
 
     /**
-     * @dev Temporary pauses swapping of some particular token, which can be reenaled later.
+     * @dev Temporarily pauses swapping of some particular token, which can be reenabled later.
      * Only admin can call this method.
      * @param _token address of the paused token contract.
      */
@@ -101,7 +101,7 @@ contract SBCWrapper is IERC677Receiver, PausableEIP1967Admin, Claimable, Reentra
         address sender = _msgSender();
 
         // We do not plan to support any deflationary or rebasing tokens in this contract
-        // so it is not required to check that ERC20 balance has indeed change.
+        // so it is not required to check that ERC20 balance has indeed changed.
         // It is an admin responsibility to carefully check that enabled token correctly implements ERC20 standard.
         IERC20(_token).safeTransferFrom(sender, address(this), _amount);
 

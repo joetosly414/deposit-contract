@@ -84,9 +84,9 @@ contract SBCDepositContract is
     ) external whenNotPaused {
         uint256 count = deposit_data_roots.length;
         require(count > 0, "BatchDeposit: You should deposit at least one validator");
-        require(pubkeys.length == count * 48, "BatchDeposit: Pubkey count don't match");
-        require(signatures.length == count * 96, "BatchDeposit: Signatures count don't match");
-        require(withdrawal_credentials.length == 32, "BatchDeposit: Withdrawal Credentials count don't match");
+        require(pubkeys.length == count * 48, "BatchDeposit: Pubkey count doesn't match");
+        require(signatures.length == count * 96, "BatchDeposit: Signatures count doesn't match");
+        require(withdrawal_credentials.length == 32, "BatchDeposit: Withdrawal Credentials count doesn't match");
 
         uint256 stake_amount = 1 ether;
         stake_token.safeTransferFrom(msg.sender, address(this), stake_amount * count);
@@ -290,7 +290,7 @@ contract SBCDepositContract is
      *     - the length of `_amounts` array is not equal to the length of `_addresses` array;
      * Call to this function doesn't transmit flow control to any untrusted contract, nor does any operation of unbounded gas usage.
      * NOTE: This function signature is hardcoded in the Gnosis execution layer clients. Changing this signature without updating the
-     * clients will cause block verification of any post-shangai block to fail. The function signature cannonical spec is here
+     * clients will cause block verification of any post-shangai block to fail. The function signature canonical spec is here
      * https://github.com/gnosischain/specs/blob/master/execution/withdrawals.md
      * Note: chiado network requires this signature to sync post-shapella blocks. This function signature can only be deprecated after
      * deprecating chiado network of full sync up to a pre-specified block.
@@ -307,7 +307,7 @@ contract SBCDepositContract is
             _msgSender() == SYSTEM_WITHDRAWAL_EXECUTOR || _msgSender() == _admin(),
             "This function should be called only by SYSTEM_WITHDRAWAL_EXECUTOR or _admin()"
         );
-        assert(_amounts.length == _addresses.length);
+        require(_amounts.length == _addresses.length, "BatchDeposit: Wrong arrays length");
 
         for (uint256 i = 0; i < _amounts.length; ++i) {
             // Divide stake amount by 32 (1 GNO for validating instead of the 32 ETH expected)
