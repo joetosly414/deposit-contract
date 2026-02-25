@@ -72,7 +72,7 @@ contract SBCDepositContract is
         bytes32 deposit_data_root,
         uint256 stake_amount
     ) external override whenNotPaused {
-        stake_token.transferFrom(msg.sender, address(this), stake_amount);
+        stake_token.safeTransferFrom(msg.sender, address(this), stake_amount);
         _deposit(pubkey, withdrawal_credentials, signature, deposit_data_root, stake_amount);
     }
 
@@ -89,7 +89,7 @@ contract SBCDepositContract is
         require(withdrawal_credentials.length == 32, "BatchDeposit: Withdrawal Credentials count don't match");
 
         uint256 stake_amount = 1 ether;
-        stake_token.transferFrom(msg.sender, address(this), stake_amount * count);
+        stake_token.safeTransferFrom(msg.sender, address(this), stake_amount * count);
 
         for (uint256 i = 0; i < count; ++i) {
             bytes memory pubkey = bytes(pubkeys[i * 48:(i + 1) * 48]);
@@ -118,7 +118,7 @@ contract SBCDepositContract is
             totalAmount += amounts[i];
         }
 
-        stake_token.transferFrom(msg.sender, address(this), totalAmount);
+        stake_token.safeTransferFrom(msg.sender, address(this), totalAmount);
 
         for (uint256 i = 0; i < count; ++i) {
             bytes memory pubkey = bytes(pubkeys[i * 48:(i + 1) * 48]);

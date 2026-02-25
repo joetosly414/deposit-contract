@@ -3,12 +3,15 @@
 pragma solidity 0.8.9;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
  * @title Claimable
  * @dev Implementation of the claiming utils that can be useful for withdrawing accidentally sent tokens.
  */
 contract Claimable {
+    using SafeERC20 for IERC20;
+
     /**
      * @dev Withdraws the erc20 tokens or native coins from this contract.
      * @param _token address of the claimed token or address(0) for native coins.
@@ -38,6 +41,6 @@ contract Claimable {
      */
     function _claimERC20Tokens(address _token, address _to) internal {
         uint256 balance = IERC20(_token).balanceOf(address(this));
-        IERC20(_token).transfer(_to, balance);
+        IERC20(_token).safeTransfer(_to, balance);
     }
 }
